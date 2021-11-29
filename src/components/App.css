@@ -28,11 +28,23 @@
   margin-top: 4rem;
 }
 
+.todoInputForm {
+    display: flex;
+    flex-direction: column;
+    width: 50%;
+    margin: 0 auto;
+
+}
+
 button {
   background-color: rgb(65, 65, 171);
   color: white;
   height: 2rem;
   font-size: 1rem;
+}
 
+input {
+  height: 2rem;
+  font-size: 1rem;
 }
 

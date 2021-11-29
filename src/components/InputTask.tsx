@@ -41,11 +41,11 @@ const InputTask = (props: any) => {
 
   return (<div>
 
-    <form
+    <form className="todoInputForm"
       onSubmit={handleAddTaskToList}
     >
       <input id="inputForTask" placeholder="task" type="text" value={task} onChange={handleTaskInput} />
-      <input placeholder="deadline" type="number" value={deadline} onChange={handleDeadlineInput} />
+      <input placeholder="days to complete" type="number" value={deadline} onChange={handleDeadlineInput} />
 
       <button
         // onClick={handleAddTaskToList}
@@ -62,7 +62,7 @@ const InputTask = (props: any) => {
             <ul className="ulTodoList">
               <ul id={`${taskName}`} className="todoListTask">
                 <li> <h4>Task: {taskName} </h4> </li>
-                <li> <h5> Due Date: {deadline} </h5> </li>
+                <li> <h5> Days left to complete: {deadline} </h5> </li>
                 < DeleteTaskButton
                 handleRemoveTask={handleRemoveTask}
                 todo={todo}
@@ -72,6 +72,16 @@ const InputTask = (props: any) => {
           </div>
           )
       })}
+
+      {todoList.length < 1
+      ?
+      <div>
+        <h2>There are no items in your todo list</h2>
+        <h3> please enter your task and deadline above </h3>
+      </div>
+      :
+      ''
+      }
     </div>
   </div>)
 

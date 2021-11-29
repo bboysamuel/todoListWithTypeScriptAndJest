@@ -1,6 +1,7 @@
 
 ## About
 This is a react front end project using jest for testing, typescript, and react.
+see deployed sample at https://romantic-hugle-ee2764.netlify.app/
 
 ## Set up
 ### `npm i`
