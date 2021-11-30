@@ -3,8 +3,9 @@ import React, {FC, ChangeEvent, useState} from 'react';
 import './App.css';
 import {
   //bring components in here
-  SamsTestComponent,
+  // SamsTestComponent,
   InputTask,
+  AboutThisApp,
 } from './'
 
 import {
@@ -19,6 +20,7 @@ const App: FC = () => {
 
   return (
     <div className="App">
+      <AboutThisApp />
       <h1>Enter your task and deadline to complete</h1>
       <InputTask
       task={task}
