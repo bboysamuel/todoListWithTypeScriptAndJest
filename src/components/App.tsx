@@ -6,6 +6,7 @@ import {
   // SamsTestComponent,
   InputTask,
   AboutThisApp,
+  Calendar,
 } from './'
 
 import {
@@ -31,6 +32,8 @@ const App: FC = () => {
       setDeadline={setDeadline}
        />
       {/* <SamsTestComponent /> */}
+
+      < Calendar />
     </div>
 
   );
