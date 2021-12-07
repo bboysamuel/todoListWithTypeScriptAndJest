@@ -1,6 +1,6 @@
 import React, {useState} from 'react'
 
-const displayMonths: string[] = [
+const displayMonthsArray: string[] = [
   'January',
   'February',
   'March',
@@ -25,15 +25,25 @@ const displayDayNames: string[] = [
 ]
 
 const currentDate = new Date()
-const currentMonth = currentDate.getMonth()
-const currentDateString = currentDate.toDateString()
+const currentMonthNumber = currentDate.getMonth()
+const currentMonthDisplay = displayMonthsArray[currentMonthNumber]
+// console.log('currentMonth', currentMonth)
+const currentDateDisplay= currentDate.toDateString()
+
+
+const lastDayOfMonth = new Date(currentDate.getFullYear(), currentDate.getMonth() + 1, 0).getDate() // 0 gets the last day of the previous month. so add 1 month so it's current month.
 
 let daysNumbers: number[] = []
 
-for(let i = 1; i <= 31; i++) {
+for(let i = 1; i <= lastDayOfMonth; i++) {
   daysNumbers.push(i)
 }
 // console.log('days', daysNumbers)
+
+const handleMonthNavClick = (e: React.MouseEvent): void => {
+    console.log('clicked')
+    // set month state to state + 1. if prev set state to state -1
+}
 
 
 const Calendar = () => {
@@ -42,13 +52,22 @@ const Calendar = () => {
     <div className="calendar">
 
       <div className="displayMonths">
-        {displayMonths.map((month: string, idx: number) => {
+        <div className="month">
+          <h2 onClick={handleMonthNavClick}
+          className="prevMonthButton"> {'>'}</h2>
+          <h1> {currentMonthDisplay}</h1>
+          <p> {currentDateDisplay} </p>
+          <h2 onClick={handleMonthNavClick}
+          className="nextMonthButton"> {'>'} </h2>
+
+        </div>
+        {/* {displayMonthsArray.map((month: string, idx: number) => {
           return(
           <div key={idx} id={month} className="month">
               {month}
           </div>
             )
-        })}
+        })} */}
       </div>
 
       <div className="displayDayNames">

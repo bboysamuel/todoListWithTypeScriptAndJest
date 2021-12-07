@@ -107,28 +107,7 @@ CALENDAR
   text-shadow: 0 0.3rem 0.5rem rgba(0, 0, 0, 0.5);
 }
 
-.month i {
-  font-size: 2.5rem;
-  cursor: pointer;
-}
-
-/* ========== */
-
-/*
-
-.month h1 {
-  font-size: 3rem;
-  font-weight: 400;
-  text-transform: uppercase;
-  letter-spacing: 0.2rem;
-  margin-bottom: 1rem;
-}
-
-.month p {
-  font-size: 1.6rem;
-}
-
-.weekdays {
+.displayDayNames {
   width: 100%;
   height: 5rem;
   padding: 0 0.4rem;
@@ -136,7 +115,7 @@ CALENDAR
   align-items: center;
 }
 
-.weekdays div {
+.displayDayNames .dayName {
   font-size: 1.5rem;
   font-weight: 400;
   letter-spacing: 0.1rem;
@@ -147,14 +126,14 @@ CALENDAR
   text-shadow: 0 0.3rem 0.5rem rgba(0, 0, 0, 0.5);
 }
 
-.days {
+.displayDayNumbers {
   width: 100%;
   display: flex;
   flex-wrap: wrap;
   padding: 0.2rem;
 }
 
-.days div {
+.dayNumber {
   font-size: 1.4rem;
   margin: 0.3rem;
   width: calc(40.2rem / 7);
@@ -166,11 +145,41 @@ CALENDAR
   transition: background-color 0.2s;
 }
 
-.days div:hover:not(.today) {
+.dayNumber:hover:not(.today) {
   background-color: #262626;
   border: 0.2rem solid #777;
   cursor: pointer;
 }
+
+/* .month i {
+  font-size: 2.5rem;
+  cursor: pointer;
+}
+this is left and right arrows for click
+*/
+
+
+
+/*
+
+current month display
+.month h1 {
+  font-size: 3rem;
+  font-weight: 400;
+  text-transform: uppercase;
+  letter-spacing: 0.2rem;
+  margin-bottom: 1rem;
+}
+
+current date text below
+.month p {
+  font-size: 1.6rem;
+}
+
+
+
+
+
 
 .prev-date,
 .next-date {
