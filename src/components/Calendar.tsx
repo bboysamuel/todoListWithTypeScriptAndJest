@@ -12,23 +12,32 @@ const displayMonthsArray: string[] = [
   'September',
   'October',
   'November',
-  'December'
+  'December',
 ]
 const displayDayNames: string[] = [
-  'Sunday',
-  'Monday',
-  'Tuesday',
-  'Wednesday',
-  'Thursday',
-  'Friday',
-  'Saturday',
+  'Sun',
+  'Mon',
+  'Tue',
+  'Wed',
+  'Thu',
+  'Fri',
+  'Sat',
 ]
 
-const currentDate = new Date()
+
+const Calendar = (props: any) => {
+
+  const {showCalendar, setShowCalendar, showCalendarOnClick} = props
+
+  const [selectedDate, setSelectedDate] = useState()
+
+  console.log('showCalendar', showCalendar)
+
+  const currentDate = new Date()
 const currentMonthNumber = currentDate.getMonth()
-const currentMonthDisplay = displayMonthsArray[currentMonthNumber]
+const [currentMonthDisplay, setCurrentMonthDisplay] = useState<string>(displayMonthsArray[currentMonthNumber])
 // console.log('currentMonth', currentMonth)
-const currentDateDisplay= currentDate.toDateString()
+let currentDateDisplay = currentDate.toDateString()
 
 
 const lastDayOfMonth = new Date(currentDate.getFullYear(), currentDate.getMonth() + 1, 0).getDate() // 0 gets the last day of the previous month. so add 1 month so it's current month.
@@ -40,26 +49,39 @@ for(let i = 1; i <= lastDayOfMonth; i++) {
 }
 // console.log('days', daysNumbers)
 
-const handleMonthNavClick = (e: React.MouseEvent): void => {
-    console.log('clicked')
+const handlePreviousMonthNavClick = (e: React.MouseEvent): void => {
+    const indexOfCurrentMonth = displayMonthsArray.indexOf(currentMonthDisplay)
+    if(indexOfCurrentMonth === 0) {
+      setCurrentMonthDisplay(displayMonthsArray[displayMonthsArray.length - 1])
+    } else {
+      setCurrentMonthDisplay(displayMonthsArray[indexOfCurrentMonth - 1])
+
+    }
+
+    // set month state to state + 1. if prev set state to state -1
+}
+const handleNextMonthNavClick = (e: React.MouseEvent): void => {
+    const indexOfCurrentMonth = displayMonthsArray.indexOf(currentMonthDisplay)
+    if(indexOfCurrentMonth === displayMonthsArray.length - 1) {
+      setCurrentMonthDisplay(displayMonthsArray[0])
+    } else {
+      setCurrentMonthDisplay(displayMonthsArray[indexOfCurrentMonth + 1])
+
+    }
     // set month state to state + 1. if prev set state to state -1
 }
 
 
-const Calendar = () => {
-
-  return(<div className="calendarContainer">
+  return(<div className={showCalendar ? "calendarContainer show" : "calendarContainer hide"}>
     <div className="calendar">
 
       <div className="displayMonths">
+      <h2
+          onClick={handlePreviousMonthNavClick}
+          className="monthNavButton prevMonthButton"> {'<'}</h2>
         <div className="month">
-          <h2 onClick={handleMonthNavClick}
-          className="prevMonthButton"> {'>'}</h2>
           <h1> {currentMonthDisplay}</h1>
           <p> {currentDateDisplay} </p>
-          <h2 onClick={handleMonthNavClick}
-          className="nextMonthButton"> {'>'} </h2>
-
         </div>
         {/* {displayMonthsArray.map((month: string, idx: number) => {
           return(
@@ -68,6 +90,8 @@ const Calendar = () => {
           </div>
             )
         })} */}
+                  <h2 onClick={handleNextMonthNavClick}
+          className="monthNavButton nextMonthButton"> {'>'} </h2>
       </div>
 
       <div className="displayDayNames">
@@ -89,8 +113,9 @@ const Calendar = () => {
             )
         })}
       </div>
-
+      <button className="closeCalendarButton" onClick={showCalendarOnClick}> Close </button>
     </div>
+
 
   </div>)
 }

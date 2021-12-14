@@ -4,11 +4,13 @@ import {
   ITask
 } from './interfaces'
 
-import { DeleteTaskButton} from './'
+import { DeleteTaskButton, Calendar,} from './'
 
 
 const InputTask = (props: any) => {
   const {task, setTask, deadline, setDeadline, todoList, setTodoList} = props
+
+  const [showCalendar, setShowCalendar] = useState<boolean>(false)
 
   const handleTaskInput = (e: React.FormEvent<HTMLInputElement>) => {
     console.log(e.currentTarget.value)
@@ -38,20 +40,44 @@ const InputTask = (props: any) => {
     setTodoList([...arrayOfTodos])
   }
 
+  const showCalendarOnClick = () => {
+    console.log('show click')
+    setShowCalendar(!showCalendar)
 
-  return (<div>
+  }
+  // const hideCalendarOnClick = () => {
+  //   if (showCalendar === true) {
+  //     console.log('hide click')
+  //     setShowCalendar(false)
+  //   }
 
-    <form className="todoInputForm"
-      onSubmit={handleAddTaskToList}
+  // }
+
+
+  return (<div
+    // onClick={hideCalendarOnClick}
+  >
+
+    {/* <form className="todoInputForm"
+      // onSubmit={handleAddTaskToList}
+    > */}
+    <div className="todoInputForm"
+      // onSubmit={handleAddTaskToList}
     >
       <input id="inputForTask" placeholder="task" type="text" value={task} onChange={handleTaskInput} />
-      <input placeholder="days to complete" type="number" value={deadline} onChange={handleDeadlineInput} />
+      {/* <input placeholder="days to complete" type="number" value={deadline} onChange={handleDeadlineInput} /> */}
 
       <button
-        // onClick={handleAddTaskToList}
+      onClick={showCalendarOnClick}
+      > Add Due Date </button>
+      <Calendar showCalendarOnClick={showCalendarOnClick} showCalendar={showCalendar} setShowCalendar={setShowCalendar} />
+
+      <button
+        onClick={handleAddTaskToList}
         >Add Task
       </button>
-   </form>
+   </div>
+   {/* </form> */}
 
 
     <div className="todoListDisplay" >

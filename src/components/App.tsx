@@ -33,7 +33,10 @@ const App: FC = () => {
        />
       {/* <SamsTestComponent /> */}
 
-      < Calendar />
+    <div className="calInAppContainer">
+      {/* < Calendar /> */}
+    </div>
+
     </div>
 
   );

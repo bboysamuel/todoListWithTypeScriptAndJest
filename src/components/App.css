@@ -75,30 +75,36 @@ input {
 CALENDAR
 */
 
+/* .calInAppContainer {
+  width: 100px
+} */
 
 .calendarContainer {
   /* display: none; */
-  width: 100%;
-  height: 100vh;
+  align-self: center;
+  width: 500px;
+  height: 500px;
   background-color: #12121f;
-  color:rgb(62, 102, 152);
+  color:rgb(249, 249, 249);
   display: flex;
   justify-content: center;
   align-items: center;
+  z-index: 1;
+
 }
 
 .calendar {
   /* border: 3px solid red; */
-  width: 45rem;
-  height: 52rem;
+  width: 100%;
+  /* height: 100vh; */
   background-color: #222227;
   box-shadow: 0 0.5rem 3rem rgba(0, 0, 0, 0.4);
 }
 
 .displayMonths {
-  width: 100%;
-  height: 12rem;
-  background-color: #167e56;
+  /* width: 100%; */
+  height: 10rem;
+  background-color: rgb(62, 102, 152);
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -118,8 +124,9 @@ CALENDAR
 .displayDayNames .dayName {
   font-size: 1.5rem;
   font-weight: 400;
-  letter-spacing: 0.1rem;
-  width: calc(44.2rem / 7);
+  padding: 1rem;
+  /* letter-spacing: 0.1rem; */
+  width: calc(21rem / 7);
   display: flex;
   justify-content: center;
   align-items: center;
@@ -136,7 +143,7 @@ CALENDAR
 .dayNumber {
   font-size: 1.4rem;
   margin: 0.3rem;
-  width: calc(40.2rem / 7);
+  width: calc(27rem / 7);
   height: 5rem;
   display: flex;
   justify-content: center;
@@ -147,45 +154,53 @@ CALENDAR
 
 .dayNumber:hover:not(.today) {
   background-color: #262626;
-  border: 0.2rem solid #777;
+  border: 2px solid #777;
   cursor: pointer;
 }
 
-/* .month i {
+ .monthNavButton {
   font-size: 2.5rem;
   cursor: pointer;
 }
+
+/* current month display title */
+.month h1 {
+  font-size: 2.5rem;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.1rem;
+}
+
+.show {
+  display: inherit;
+}
+
+.hide {
+  display: none;
+}
+
+.closeCalendarButton {
+  width: 100%;
+}
+
+
+/*
 this is left and right arrows for click
 */
 
 
 
+
+
+
+
 /*
-
-current month display
-.month h1 {
-  font-size: 3rem;
-  font-weight: 400;
-  text-transform: uppercase;
-  letter-spacing: 0.2rem;
-  margin-bottom: 1rem;
-}
-
 current date text below
 .month p {
   font-size: 1.6rem;
 }
 
 
-
-
-
-
-.prev-date,
-.next-date {
-  opacity: 0.5;
-}
-
-.today {
+.currentDay {
   background-color: #167e56;
 } */
