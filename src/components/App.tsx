@@ -13,6 +13,18 @@ import {
   ITask
 } from './interfaces'
 
+/*
+TODO:
+menu nav bar
+footer
+about tab
+description
+edit
+reset cal on submission and on click
+if 1 day left turns red.
+
+*/
+
 const App: FC = () => {
 
   const [task, setTask] = useState<string>("")

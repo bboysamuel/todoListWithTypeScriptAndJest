@@ -34,12 +34,17 @@ const Calendar = (props: any) => {
   console.log('showCalendar', showCalendar)
 
   const currentDate = new Date()
+  // currentDate.setMonth(5) set the month to june to test
+  // currentDate.setMonth(1)
+  console.log('date', currentDate.getDay())
 const currentMonthNumber = currentDate.getMonth()
 const [currentMonthDisplay, setCurrentMonthDisplay] = useState<string>(displayMonthsArray[currentMonthNumber])
 // console.log('currentMonth', currentMonth)
 let currentDateDisplay = currentDate.toDateString()
 
 
+
+// ======== displays correct number of days per month =================
 const lastDayOfMonth = new Date(currentDate.getFullYear(), currentDate.getMonth() + 1, 0).getDate() // 0 gets the last day of the previous month. so add 1 month so it's current month.
 
 let daysNumbers: number[] = []
@@ -48,6 +53,38 @@ for(let i = 1; i <= lastDayOfMonth; i++) {
   daysNumbers.push(i)
 }
 // console.log('days', daysNumbers)
+
+// =========== last month's days to display ======
+
+
+
+let lastMonthDays: number[] = []
+
+const prevMonthLastDay = new Date(currentDate.getFullYear(), currentDate.getMonth(), 0).getDate()
+console.log('prevMonthLastDay', prevMonthLastDay)
+
+const firstDayIdx = currentDate.getDay()
+for(let j = firstDayIdx; j > 0; j -- ) {
+  let dayNumFromLastMonthToDisplay = prevMonthLastDay - j + 1
+  console.log('dayNumFromLastMonthToDisplayOnCal', dayNumFromLastMonthToDisplay)
+
+  lastMonthDays.push(dayNumFromLastMonthToDisplay)
+
+}
+
+
+// ======== create next days for display
+
+const lastDayIdx = new Date(currentDate.getFullYear(), currentDate.getMonth() + 1, 0).getDay()
+console.log('lastDayIdx', lastDayIdx)
+
+let nextDaysToDisplay = 7 - lastDayIdx - 1
+
+// for (let k = 1; k <= nextDaysToDisplay; k++ ) {
+//     let nextDayNum = k
+// }
+// stopped here
+
 
 const handlePreviousMonthNavClick = (e: React.MouseEvent): void => {
     const indexOfCurrentMonth = displayMonthsArray.indexOf(currentMonthDisplay)
