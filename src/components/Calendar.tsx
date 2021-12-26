@@ -31,12 +31,15 @@ const Calendar = (props: any) => {
 
   const [selectedDate, setSelectedDate] = useState()
 
-  console.log('showCalendar', showCalendar)
+  // console.log('showCalendar', showCalendar)
 
   const currentDate = new Date()
   // currentDate.setMonth(5) set the month to june to test
   // currentDate.setMonth(1)
   console.log('date', currentDate.getDay())
+  console.log('currentDate', currentDate)
+  const currentDayNum = currentDate.getDate()
+
 const currentMonthNumber = currentDate.getMonth()
 const [currentMonthDisplay, setCurrentMonthDisplay] = useState<string>(displayMonthsArray[currentMonthNumber])
 // console.log('currentMonth', currentMonth)
@@ -47,30 +50,42 @@ let currentDateDisplay = currentDate.toDateString()
 // ======== displays correct number of days per month =================
 const lastDayOfMonth = new Date(currentDate.getFullYear(), currentDate.getMonth() + 1, 0).getDate() // 0 gets the last day of the previous month. so add 1 month so it's current month.
 
-let daysNumbers: number[] = []
+// let daysNumbers: number[] = []
+let daysNumbers: {num: number, display: string }[] = []
 
 for(let i = 1; i <= lastDayOfMonth; i++) {
-  daysNumbers.push(i)
+  if (i === currentDayNum) {
+    console.log('days111', i, currentDayNum)
+    daysNumbers.push({num: i, display: 'currentMonthCurrentDay'})
+  } else {
+    daysNumbers.push({num: i, display: 'currentMonth'})
+
+  }
+  // daysNumbers.push({num: i, display: 'currentMonth'})
 }
 // console.log('days', daysNumbers)
 
-// =========== last month's days to display ======
+
+// =========== prev month's days to display ======
 
 
 
-let lastMonthDays: number[] = []
+// let lastMonthDays: number[] = []
+let lastMonthDays: {num: number, display: string }[] = []
 
 const prevMonthLastDay = new Date(currentDate.getFullYear(), currentDate.getMonth(), 0).getDate()
 console.log('prevMonthLastDay', prevMonthLastDay)
 
-const firstDayIdx = currentDate.getDay()
-for(let j = firstDayIdx; j > 0; j -- ) {
+const currentDayIdx = currentDate.getDay()
+for(let j = currentDayIdx; j > 0; j -- ) {
   let dayNumFromLastMonthToDisplay = prevMonthLastDay - j + 1
   console.log('dayNumFromLastMonthToDisplayOnCal', dayNumFromLastMonthToDisplay)
+  // daysNumbers.unshift({num: dayNumFromLastMonthToDisplay, display: 'prevMonth'})
 
-  lastMonthDays.push(dayNumFromLastMonthToDisplay)
+  lastMonthDays.push({num: dayNumFromLastMonthToDisplay, display: 'prevMonth'})
 
 }
+daysNumbers.unshift(...lastMonthDays)
 
 
 // ======== create next days for display
@@ -80,9 +95,11 @@ console.log('lastDayIdx', lastDayIdx)
 
 let nextDaysToDisplay = 7 - lastDayIdx - 1
 
-// for (let k = 1; k <= nextDaysToDisplay; k++ ) {
-//     let nextDayNum = k
-// }
+for (let k = 1; k <= nextDaysToDisplay; k++ ) {
+    let nextDayNum = k
+    daysNumbers.push({num: nextDayNum, display: 'nextMonth'})
+
+}
 // stopped here
 
 
@@ -107,6 +124,12 @@ const handleNextMonthNavClick = (e: React.MouseEvent): void => {
     }
     // set month state to state + 1. if prev set state to state -1
 }
+
+const renderCal = () => {
+  // add all code here. and run when clicked next or previous etc
+}
+
+console.log('daysNumbers', daysNumbers)
 
 
   return(<div className={showCalendar ? "calendarContainer show" : "calendarContainer hide"}>
@@ -142,12 +165,38 @@ const handleNextMonthNavClick = (e: React.MouseEvent): void => {
       </div>
 
       <div className="displayDayNumbers">
-        {daysNumbers.map((dayNumber: number, idx: number) => {
-          return(
-          <div key={idx} className="dayNumber">
-              {dayNumber}
-          </div>
-            )
+        {daysNumbers.map((dayNumber, idx) => {
+          console.log('dayNumber', dayNumber.num)
+          if(dayNumber.display === 'prevMonth') {
+            return(
+              <div key={idx} className="dayNumber notCurrentMonthDay prevDayNumber">
+                  {dayNumber.num}
+              </div>
+                )
+          } else if (dayNumber.display === 'currentMonth') {
+            return(
+              <div key={idx} className="dayNumber">
+                  {dayNumber.num}
+              </div>
+                )
+          } else if (dayNumber.display === 'currentMonthCurrentDay') {
+            return(
+              <div key={idx} className="dayNumber currentMonthCurrentDay">
+                  {dayNumber.num}
+              </div>
+                )
+          } else if (dayNumber.display === 'nextMonth') {
+            return(
+              <div key={idx} className="dayNumber notCurrentMonthDay nextDayNumber">
+                  {dayNumber.num}
+              </div>
+                )
+          }
+          // return(
+          // <div key={idx} className="dayNumber">
+          //     {dayNumber.num}
+          // </div>
+          //   )
         })}
       </div>
       <button className="closeCalendarButton" onClick={showCalendarOnClick}> Close </button>

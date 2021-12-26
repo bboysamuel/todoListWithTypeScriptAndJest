@@ -183,6 +183,14 @@ CALENDAR
   width: 100%;
 }
 
+.currentMonthCurrentDay {
+  color: red;
+  border: 2px solid yellow;
+}
+
+.notCurrentMonthDay {
+  color: gray;
+}
 
 /*
 this is left and right arrows for click
