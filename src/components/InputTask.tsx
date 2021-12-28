@@ -41,7 +41,6 @@ const InputTask = (props: any) => {
   }
 
   const showCalendarOnClick = () => {
-    console.log('show click')
     setShowCalendar(!showCalendar)
 
   }
@@ -53,32 +52,31 @@ const InputTask = (props: any) => {
 
   // }
 
+  // const newDeadline = deadline.getUTCMonth() + 1
+  console.log('deadLine', typeof(deadline))
+  // dt.getFullYear() + "/" + (dt.getMonth() + 1) + "/" + dt.getDate();
 
-  return (<div
-    // onClick={hideCalendarOnClick}
-  >
 
-    {/* <form className="todoInputForm"
-      // onSubmit={handleAddTaskToList}
-    > */}
-    <div className="todoInputForm"
-      // onSubmit={handleAddTaskToList}
-    >
-      <input id="inputForTask" placeholder="task" type="text" value={task} onChange={handleTaskInput} />
-      {/* <input placeholder="days to complete" type="number" value={deadline} onChange={handleDeadlineInput} /> */}
 
+  return (<div>
+
+    <div className="todoInputForm">
+      <input id="inputForTask" placeholder="Enter Task" type="text" value={task} onChange={handleTaskInput} />
       <button
       onClick={showCalendarOnClick}
-      > Add Due Date </button>
-      <Calendar showCalendarOnClick={showCalendarOnClick} showCalendar={showCalendar} setShowCalendar={setShowCalendar} />
+      > {deadline ? `Complete By: ${deadline}` : "Add Deadline"} </button>
+      <Calendar
+      showCalendarOnClick={showCalendarOnClick}
+      showCalendar={showCalendar}
+      setShowCalendar={setShowCalendar}
+      setDeadline={setDeadline}
+      />
 
       <button
         onClick={handleAddTaskToList}
-        >Add Task
+        >Add Your Task
       </button>
    </div>
-   {/* </form> */}
-
 
     <div className="todoListDisplay" >
       {todoList.map((todo: ITask, idx: number) => {

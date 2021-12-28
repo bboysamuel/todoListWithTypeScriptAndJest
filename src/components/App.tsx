@@ -13,23 +13,12 @@ import {
   ITask
 } from './interfaces'
 
-/*
-TODO:
-menu nav bar
-footer
-about tab
-description
-edit
-reset cal on submission and on click
-if 1 day left turns red.
-
-*/
 
 const App: FC = () => {
 
   const [task, setTask] = useState<string>("")
   const [todoList, setTodoList] = useState<ITask[]>([])
-  const [deadline, setDeadline] = useState<any>('')
+  const [deadline, setDeadline] = useState<Date>()
 
   return (
     <div className="App">
@@ -43,11 +32,6 @@ const App: FC = () => {
       deadline={deadline}
       setDeadline={setDeadline}
        />
-      {/* <SamsTestComponent /> */}
-
-    <div className="calInAppContainer">
-      {/* < Calendar /> */}
-    </div>
 
     </div>
 

@@ -46,12 +46,13 @@
 button {
   background-color: rgb(62, 102, 152);
   color: white;
-  height: 2rem;
+  height: 3rem;
   font-size: 1rem;
+  margin: 1rem;
 }
 
 input {
-  height: 2rem;
+  height: 3rem;
   font-size: 1rem;
 }
 
@@ -141,9 +142,9 @@ CALENDAR
 }
 
 .dayNumber {
-  font-size: 1.4rem;
+  font-size: 1.3rem;
   margin: 0.3rem;
-  width: calc(27rem / 7);
+  width: calc(26rem / 7);
   height: 5rem;
   display: flex;
   justify-content: center;
@@ -154,7 +155,7 @@ CALENDAR
 
 .dayNumber:hover:not(.today) {
   background-color: #262626;
-  border: 2px solid #777;
+  border: 1px solid #777;
   cursor: pointer;
 }
 

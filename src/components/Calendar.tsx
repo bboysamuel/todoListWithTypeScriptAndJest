@@ -1,4 +1,4 @@
-import React, {useState} from 'react'
+import React, {useState, useEffect} from 'react'
 
 const displayMonthsArray: string[] = [
   'January',
@@ -24,132 +24,104 @@ const displayDayNames: string[] = [
   'Sat',
 ]
 
-
 const Calendar = (props: any) => {
 
-  const {showCalendar, setShowCalendar, showCalendarOnClick} = props
+  const {
+     showCalendar,
+     showCalendarOnClick,
+     setDeadline} = props
 
-  const [selectedDate, setSelectedDate] = useState()
-
-  // console.log('showCalendar', showCalendar)
-
-  const currentDate = new Date()
-  // currentDate.setMonth(5) set the month to june to test
-  // currentDate.setMonth(1)
-  console.log('date', currentDate.getDay())
-  console.log('currentDate', currentDate)
-  const currentDayNum = currentDate.getDate()
-
-const currentMonthNumber = currentDate.getMonth()
-const [currentMonthDisplay, setCurrentMonthDisplay] = useState<string>(displayMonthsArray[currentMonthNumber])
-// console.log('currentMonth', currentMonth)
-let currentDateDisplay = currentDate.toDateString()
+  const date = new Date()
+  const [currentDate, setCurrentDate] = useState<Date>(date)
+  const [selectedDate, setSelectedDate] = useState<Date>(currentDate)
+  // const [currentDayNum, setCurrentDayNum] = useState<number>(currentDate.getDate())
+  const [currentMonthNumber, setCurrentMonthNumber] = useState<number>(currentDate.getMonth())
+  // const [currentDateDisplay, setCurrentDateDisplay] = useState<string>(currentDate.toDateString())
+  const [currentMonthDisplay, setCurrentMonthDisplay] = useState<string>(displayMonthsArray[currentMonthNumber])
+  let daysNumbers: {num: number, display: string }[] = []
 
 
+  useEffect(() => {
+      // setCurrentDayNum(currentDate.getDate())
+      setCurrentMonthNumber(currentDate.getMonth())
+      setCurrentMonthDisplay(displayMonthsArray[currentMonthNumber])
+      renderCal()
+  })
 
-// ======== displays correct number of days per month =================
-const lastDayOfMonth = new Date(currentDate.getFullYear(), currentDate.getMonth() + 1, 0).getDate() // 0 gets the last day of the previous month. so add 1 month so it's current month.
+  const renderCal = () => {
 
-// let daysNumbers: number[] = []
-let daysNumbers: {num: number, display: string }[] = []
+    const createDaysForCurrentMonth = () => {
+      // ======== displays correct number of days per month =================
+      const lastDayOfMonth = new Date(currentDate.getFullYear(), currentDate.getMonth() + 1, 0).getDate() // 0 gets the last day of the previous month. so add 1 month so it's current month.
+      for(let i = 1; i <= lastDayOfMonth; i++) {
+          daysNumbers.push({num: i, display: 'currentMonth'})
+      }
+    }
 
-for(let i = 1; i <= lastDayOfMonth; i++) {
-  if (i === currentDayNum) {
-    console.log('days111', i, currentDayNum)
-    daysNumbers.push({num: i, display: 'currentMonthCurrentDay'})
-  } else {
-    daysNumbers.push({num: i, display: 'currentMonth'})
 
+
+    const createPreviousMonthDays = () => {
+      // =========== prev month's days to display ======
+      let lastMonthDays: {num: number, display: string }[] = []
+      const prevMonthLastDay = new Date(currentDate.getFullYear(), currentDate.getMonth(), 0).getDate()
+      const currentDayIdx = currentDate.getDay()
+      for(let j = currentDayIdx; j > 0; j -- ) {
+        let dayNumFromLastMonthToDisplay = prevMonthLastDay - j + 1
+        lastMonthDays.push({num: dayNumFromLastMonthToDisplay, display: 'prevMonth'})
+      }
+      daysNumbers.unshift(...lastMonthDays)
+    }
+
+    const createNextMonthDays = () => {
+      // ======== create next days for display ========
+      const lastDayOfCurrentMonthIdx = new Date(currentDate.getFullYear(), currentDate.getMonth() + 1, 0).getDay()
+      let nextDaysToDisplay = 7 - lastDayOfCurrentMonthIdx - 1
+      for (let k = 1; k <= nextDaysToDisplay; k++ ) {
+          let nextDayNum = k
+          daysNumbers.push({num: nextDayNum, display: 'nextMonth'})
+      }
+    }
+    createPreviousMonthDays()
+    createDaysForCurrentMonth()
+    createNextMonthDays()
   }
-  // daysNumbers.push({num: i, display: 'currentMonth'})
-}
-// console.log('days', daysNumbers)
-
-
-// =========== prev month's days to display ======
 
 
 
-// let lastMonthDays: number[] = []
-let lastMonthDays: {num: number, display: string }[] = []
+const handlePreviousMonthNavClick = (e: React.MouseEvent) => {
 
-const prevMonthLastDay = new Date(currentDate.getFullYear(), currentDate.getMonth(), 0).getDate()
-console.log('prevMonthLastDay', prevMonthLastDay)
-
-const currentDayIdx = currentDate.getDay()
-for(let j = currentDayIdx; j > 0; j -- ) {
-  let dayNumFromLastMonthToDisplay = prevMonthLastDay - j + 1
-  console.log('dayNumFromLastMonthToDisplayOnCal', dayNumFromLastMonthToDisplay)
-  // daysNumbers.unshift({num: dayNumFromLastMonthToDisplay, display: 'prevMonth'})
-
-  lastMonthDays.push({num: dayNumFromLastMonthToDisplay, display: 'prevMonth'})
+  const newDate = date
+  newDate.setMonth(newDate.getMonth() - 1)
+      setCurrentDate(newDate)
 
 }
-daysNumbers.unshift(...lastMonthDays)
-
-
-// ======== create next days for display
-
-const lastDayIdx = new Date(currentDate.getFullYear(), currentDate.getMonth() + 1, 0).getDay()
-console.log('lastDayIdx', lastDayIdx)
-
-let nextDaysToDisplay = 7 - lastDayIdx - 1
-
-for (let k = 1; k <= nextDaysToDisplay; k++ ) {
-    let nextDayNum = k
-    daysNumbers.push({num: nextDayNum, display: 'nextMonth'})
+const handleNextMonthNavClick = (e: React.MouseEvent) => {
+  date.setMonth(currentDate.getMonth() + 1)
+  setCurrentDate(date)
 
 }
-// stopped here
 
+const handleSelectDate = ( dayNum: number) => {
+  const selectedDayAndDate = new Date(currentDate)
+  selectedDayAndDate.setDate(dayNum)
+  setSelectedDate(selectedDayAndDate)
+  setDeadline(selectedDayAndDate.toString())
 
-const handlePreviousMonthNavClick = (e: React.MouseEvent): void => {
-    const indexOfCurrentMonth = displayMonthsArray.indexOf(currentMonthDisplay)
-    if(indexOfCurrentMonth === 0) {
-      setCurrentMonthDisplay(displayMonthsArray[displayMonthsArray.length - 1])
-    } else {
-      setCurrentMonthDisplay(displayMonthsArray[indexOfCurrentMonth - 1])
-
-    }
-
-    // set month state to state + 1. if prev set state to state -1
-}
-const handleNextMonthNavClick = (e: React.MouseEvent): void => {
-    const indexOfCurrentMonth = displayMonthsArray.indexOf(currentMonthDisplay)
-    if(indexOfCurrentMonth === displayMonthsArray.length - 1) {
-      setCurrentMonthDisplay(displayMonthsArray[0])
-    } else {
-      setCurrentMonthDisplay(displayMonthsArray[indexOfCurrentMonth + 1])
-
-    }
-    // set month state to state + 1. if prev set state to state -1
 }
 
-const renderCal = () => {
-  // add all code here. and run when clicked next or previous etc
-}
-
-console.log('daysNumbers', daysNumbers)
+renderCal()
 
 
   return(<div className={showCalendar ? "calendarContainer show" : "calendarContainer hide"}>
     <div className="calendar">
-
       <div className="displayMonths">
       <h2
           onClick={handlePreviousMonthNavClick}
           className="monthNavButton prevMonthButton"> {'<'}</h2>
         <div className="month">
-          <h1> {currentMonthDisplay}</h1>
-          <p> {currentDateDisplay} </p>
+          <h1> {currentMonthDisplay} </h1>
+          <p> {selectedDate.toString()}</p>
         </div>
-        {/* {displayMonthsArray.map((month: string, idx: number) => {
-          return(
-          <div key={idx} id={month} className="month">
-              {month}
-          </div>
-            )
-        })} */}
                   <h2 onClick={handleNextMonthNavClick}
           className="monthNavButton nextMonthButton"> {'>'} </h2>
       </div>
@@ -166,22 +138,20 @@ console.log('daysNumbers', daysNumbers)
 
       <div className="displayDayNumbers">
         {daysNumbers.map((dayNumber, idx) => {
-          console.log('dayNumber', dayNumber.num)
           if(dayNumber.display === 'prevMonth') {
             return(
-              <div key={idx} className="dayNumber notCurrentMonthDay prevDayNumber">
+              <div key={idx} className={"dayNumber notCurrentMonthDay prevDayNumber"}>
                   {dayNumber.num}
               </div>
                 )
           } else if (dayNumber.display === 'currentMonth') {
             return(
-              <div key={idx} className="dayNumber">
-                  {dayNumber.num}
-              </div>
-                )
-          } else if (dayNumber.display === 'currentMonthCurrentDay') {
-            return(
-              <div key={idx} className="dayNumber currentMonthCurrentDay">
+              <div
+              onClick={() => {
+                handleSelectDate(dayNumber.num)}
+              }
+
+               key={idx} className={selectedDate.getDate() === dayNumber.num ? " currentMonthCurrentDay dayNumber" : "dayNumber"}>
                   {dayNumber.num}
               </div>
                 )
@@ -192,17 +162,10 @@ console.log('daysNumbers', daysNumbers)
               </div>
                 )
           }
-          // return(
-          // <div key={idx} className="dayNumber">
-          //     {dayNumber.num}
-          // </div>
-          //   )
         })}
       </div>
       <button className="closeCalendarButton" onClick={showCalendarOnClick}> Close </button>
     </div>
-
-
   </div>)
 }
 
