@@ -13,6 +13,15 @@ import {
   ITask
 } from './interfaces'
 
+export const addNums = (num1: number, num2: number) => {
+  return num1 + num2;
+}
+
+export const updateToAllCaps = (newValue: string) => {
+  return newValue.toUpperCase();
+}
+
+let subtractNums;
 
 const App: FC = () => {
 
@@ -20,10 +29,15 @@ const App: FC = () => {
   const [todoList, setTodoList] = useState<ITask[]>([])
   const [deadline, setDeadline] = useState<Date>()
 
+  subtractNums = (num1: number, num2: number) => {
+    return num1 - num2;
+  }
+
   return (
     <div className="App">
       <AboutThisApp />
       <h1>Enter your task and deadline to complete</h1>
+      <button onClick={() => setTask(updateToAllCaps(task))} >Uppercase</button>
       <InputTask
       task={task}
       setTask={setTask}
@@ -37,5 +51,7 @@ const App: FC = () => {
 
   );
 }
+
+export {subtractNums};
 
 export default App;
